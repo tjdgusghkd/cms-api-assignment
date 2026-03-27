@@ -1,5 +1,5 @@
 insert into members(login_id, password, name, role)
-values('ghkd5370', 'tjdgus1005!', '황성현', 'ROLE_USER');
+values('ghkd5370', '$2a$10$KaE1hOTktd3LvFgy/ETq/.HZo2Asn1wh3Kg4V/LvTKMhj.A6RX63.', '황성현', 'ROLE_USER');
 
 insert into members(login_id, password, name, role)
 values('admin', 'admin123', '관리자', 'ROLE_ADMIN');
