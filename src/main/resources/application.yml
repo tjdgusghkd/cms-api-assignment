@@ -8,7 +8,7 @@ spring:
     name: simple-cms-api
   h2:
     console:
-      enabled: on
+      enabled: true
   sql:
     init:
       mode: embedded
@@ -28,14 +28,14 @@ spring:
         default_batch_fetch_size: 100
   threads:
     virtual:
-      enabled: on
+      enabled: true
 
 
 ## p6spy
 decorator:
   datasource:
     p6spy:
-      enable-logging: on
+      enable-logging: true
 
 ## logging
 logging:
