@@ -19,7 +19,9 @@ public class SecurityConfiguration {
 
         http.authorizeHttpRequests(
             request ->
-                request.anyRequest().authenticated());
+                request
+                .requestMatchers("/contents", "/contents/**").permitAll()
+                .anyRequest().authenticated());
 
         http.csrf(AbstractHttpConfigurer::disable);
         http.cors(AbstractHttpConfigurer::disable);
