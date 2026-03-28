@@ -1,4 +1,4 @@
-  # REST API Documentation
+ # REST API Documentation
 
   Base URL: `http://localhost:8080`
 
@@ -38,22 +38,21 @@
 
   - Status: 201 Created
 ```json
-{
+  {
     "loginId": "ghkdtjdgus",
     "memberId": 4,
     "name": "황성현",
     "role": "ROLE_USER"
-}
+  }
 ```
-  
-
   ### 예외
 
   - 409 Conflict : 이미 사용 중인 아이디
   - 400 Bad Request : 비밀번호 확인 불일치
   - 400 Bad Request : 유효성 검증 실패
+  - 400 Bad Request : 요청 본문 형식 오류
 
-  ---
+---
 
   ## 2. 로그인
 
@@ -72,20 +71,20 @@
   ### Response
 
   - Status: 200 OK
-    ```json
-    {
+```json
+  {
     "loginId": "ghkd5370",
     "memberId": 1,
     "role": "ROLE_USER"
-    }
-    ```
-
-
+  }
+```
   ### 예외
 
   - 401 Unauthorized : 아이디 또는 비밀번호 불일치
+  - 400 Bad Request : 유효성 검증 실패
+  - 400 Bad Request : 요청 본문 형식 오류
 
-  ---
+---
 
   ## 3. 로그아웃
 
@@ -97,11 +96,10 @@
   ### Response
 
   - Status: 200 OK
-```
-로그아웃 되었습니다.
-```
 
-  ---
+  로그아웃은 성공 시 별도의 응답 본문 없이 처리됩니다.
+
+---
 
   # Content API
 
@@ -116,22 +114,32 @@
   ### Request Body
 ```json
   {
-    "title": "첫 번째 콘텐츠",
-    "description": "콘텐츠 내용입니다."
+    "title": "테스트 글",
+    "description": "테스트 내용"
   }
 ```
   ### Response
 
   - Status: 201 Created
-
-  1
-
+```json
+  {
+    "contentId": 1,
+    "createdBy": "ghkd5370",
+    "createdDate": "2026-03-28T19:11:40.0992811",
+    "description": "테스트 내용",
+    "lastModifiedBy": null,
+    "lastModifiedDate": null,
+    "title": "테스트 글",
+    "viewCount": 0
+  }
+```
   ### 예외
 
   - 401 Unauthorized : 로그인 필요
   - 400 Bad Request : 제목 누락 또는 유효성 검증 실패
+  - 400 Bad Request : 요청 본문 형식 오류
 
-  ---
+---
 
   ## 2. 콘텐츠 목록 조회
 
@@ -165,7 +173,7 @@
     "number": 0
   }
 ```
-  ---
+---
 
   ## 3. 콘텐츠 상세 조회
 
@@ -201,7 +209,7 @@
   - 404 Not Found : 존재하지 않는 콘텐츠
   - 410 Gone : 삭제된 콘텐츠
 
-  ---
+---
 
   ## 4. 콘텐츠 수정
 
@@ -221,9 +229,18 @@
   ### Response
 
   - Status: 200 OK
-
-  1
-
+```json
+  {
+    "contentId": 1,
+    "title": "수정된 제목",
+    "description": "수정된 내용",
+    "viewCount": 3,
+    "createdDate": "2026-03-29T12:00:00",
+    "createdBy": "ghkd5370",
+    "lastModifiedDate": "2026-03-29T13:10:00",
+    "lastModifiedBy": "ghkd5370"
+  }
+```
   ### 예외
 
   - 401 Unauthorized : 로그인 필요
@@ -231,8 +248,9 @@
   - 404 Not Found : 존재하지 않는 콘텐츠
   - 410 Gone : 삭제된 콘텐츠
   - 400 Bad Request : 유효성 검증 실패
+  - 400 Bad Request : 요청 본문 형식 오류
 
-  ---
+---
 
   ## 5. 콘텐츠 삭제
 
@@ -245,9 +263,12 @@
   ### Response
 
   - Status: 200 OK
-
-  1
-
+```json
+  {
+    "contentId": 1,
+    "message": "콘텐츠가 삭제되었습니다."
+  }
+```
   ### 예외
 
   - 401 Unauthorized : 로그인 필요
@@ -255,7 +276,7 @@
   - 404 Not Found : 존재하지 않는 콘텐츠
   - 410 Gone : 이미 삭제된 콘텐츠
 
-  ---
+---
 
   # 권한 정책
 
@@ -268,7 +289,7 @@
 
   - 모든 콘텐츠 수정/삭제 가능
 
-  ---
+---
 
   # 테스트 계정
 
