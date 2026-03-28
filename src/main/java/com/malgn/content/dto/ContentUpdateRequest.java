@@ -16,7 +16,7 @@ public class ContentUpdateRequest {
 	
 	private String description;
 	
-	public String getTilte() {
+	public String getTitle() {
 		return title;
 	}
 	
