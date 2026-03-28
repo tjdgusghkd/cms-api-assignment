@@ -30,36 +30,4 @@ public class ContentResponse {
         this.lastModifiedDate = content.getLastModifiedDate();
         this.lastModifiedBy = content.getLastModifiedBy() != null ? content.getLastModifiedBy().getLoginId() : null;
     }
-
-    public Long getContentId() {
-        return contentId;
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public Long getViewCount() {
-        return viewCount;
-    }
-
-    public LocalDateTime getCreatedDate() {
-        return createdDate;
-    }
-
-    public String getCreatedBy() {
-        return createdBy;
-    }
-
-    public LocalDateTime getLastModifiedDate() {
-        return lastModifiedDate;
-    }
-
-    public String getLastModifiedBy() {
-        return lastModifiedBy;
-    }
 }
