@@ -18,8 +18,6 @@ public class ContentCreateRequest {
 	
 	private String description;
 	
-	@NotNull(message = "작성자 ID는 필수입니다.")
-	private Long memberId;
 	
 	public String getTitle() {
 		return title;
@@ -29,8 +27,5 @@ public class ContentCreateRequest {
 		return description;
 	}
 	
-	public Long getMemberId() {
-		return memberId;
-	}
 	
 }

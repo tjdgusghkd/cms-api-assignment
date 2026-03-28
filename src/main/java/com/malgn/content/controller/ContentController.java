@@ -12,14 +12,15 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.malgn.content.dto.ContentCreateRequest;
 import com.malgn.content.dto.ContentResponse;
 import com.malgn.content.dto.ContentUpdateRequest;
 import com.malgn.content.service.ContentService;
+import com.malgn.member.dto.LoginResponse;
 
+import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 
@@ -29,16 +30,20 @@ import lombok.RequiredArgsConstructor;
 public class ContentController {
 	
 	private final ContentService contentService;
+	
 	// 콘텐츠 생성(Create)
 	@PostMapping
-	public ResponseEntity<Long> createContent(@Valid @RequestBody ContentCreateRequest request) {
-		Long contentId = contentService.createContent(request);
+	public ResponseEntity<Long> createContent(@Valid @RequestBody ContentCreateRequest request, HttpSession session) {
+	
+		Long memberId = ((LoginResponse)session.getAttribute("LOGIN_MEMBER")).getMemberId();
+		Long contentId = contentService.createContent(request, memberId);
 		return ResponseEntity.status(HttpStatus.CREATED).body(contentId);
 	}
 	
 	// 콘텐츠 삭제 (Delete)
 	@DeleteMapping("/{contentId}")
-	public ResponseEntity<Long> deleteContent(@PathVariable("contentId") Long contentId, @RequestParam("memberId") Long memberId) {
+	public ResponseEntity<Long> deleteContent(@PathVariable("contentId") Long contentId, HttpSession session) {
+		Long memberId = ((LoginResponse)session.getAttribute("LOGIN_MEMBER")).getMemberId();
 		Long deletedContentId = contentService.deleteContent(contentId, memberId);
 		return ResponseEntity.ok(deletedContentId);
 	}
@@ -55,8 +60,10 @@ public class ContentController {
 	
 	// 콘텐츠 상세 조회
 	@GetMapping("/{contentId}")
-	public ResponseEntity<ContentResponse> getContentDetail(@PathVariable("contentId") Long contentId) {
-		ContentResponse response = contentService.getContentDetail(contentId);
+	public ResponseEntity<ContentResponse> getContentDetail(@PathVariable("contentId") Long contentId, HttpSession session) {
+		
+		LoginResponse loginMember = (LoginResponse)session.getAttribute("LOGIN_MEMBER");
+		ContentResponse response = contentService.getContentDetail(contentId, loginMember);
 		
 		return ResponseEntity.ok(response);
 	}
@@ -65,10 +72,14 @@ public class ContentController {
 	@PatchMapping("/{contentId}")
 	public ResponseEntity<Long> updateContent(
 			@PathVariable("contentId") Long contentId,
-			@Valid @RequestBody ContentUpdateRequest request
+			@Valid @RequestBody ContentUpdateRequest request,
+			HttpSession session
 			){
-		Long updatedContentId = contentService.updateContent(contentId, request);
+		Long memberId = ((LoginResponse)session.getAttribute("LOGIN_MEMBER")).getMemberId();
+		Long updatedContentId = contentService.updateContent(contentId, request, memberId);
 		return ResponseEntity.ok(updatedContentId);
 	}
+	
+	
 	
 }

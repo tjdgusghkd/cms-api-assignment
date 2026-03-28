@@ -16,9 +16,6 @@ public class ContentUpdateRequest {
 	
 	private String description;
 	
-	@NotNull(message = "수정자 ID는 필수입니다.")
-	private Long memberId;
-	
 	public String getTilte() {
 		return title;
 	}
@@ -27,7 +24,4 @@ public class ContentUpdateRequest {
 		return description;
 	}
 	
-	public Long getMemberId() {
-		return memberId;
-	}
 }

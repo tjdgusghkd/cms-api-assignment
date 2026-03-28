@@ -11,10 +11,12 @@ import com.malgn.content.dto.ContentUpdateRequest;
 import com.malgn.content.entity.Content;
 import com.malgn.content.enums.ContentStatus;
 import com.malgn.content.repository.ContentRepository;
+import com.malgn.member.dto.LoginResponse;
 import com.malgn.member.entity.Member;
 import com.malgn.member.enums.Role;
 import com.malgn.member.repository.MemberRepository;
 
+import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 
@@ -27,8 +29,8 @@ public class ContentService {
 	
 	// 콘텐츠 생성
 	@Transactional
-	public Long createContent(@Valid ContentCreateRequest request) {
-		Member member = memberRepository.findById(request.getMemberId())
+	public Long createContent(@Valid ContentCreateRequest request, Long memberId) {
+		Member member = memberRepository.findById(memberId)
 						.orElseThrow(() -> new IllegalArgumentException("존재하지 않는 회원입니다."));
 		
 		Content content =  new Content(
@@ -62,20 +64,27 @@ public class ContentService {
 				.map(ContentResponse::new);
 	}
 
-	public ContentResponse getContentDetail(Long contentId) {
+	// 콘텐츠 상세 조회
+	@Transactional(readOnly=true)
+	public ContentResponse getContentDetail(Long contentId, LoginResponse loginMember) {
 		Content content = contentRepository.findById(contentId)
 							.orElseThrow(()-> new IllegalArgumentException("존재하지 않는 콘텐츠입니다."));
+		
+		Long writerId = (content.getCreatedBy() != null) ? content.getCreatedBy().getMemberId() : null;
 		
 		if(content.getStatus() == ContentStatus.DEACTIVE) {
 			throw new IllegalArgumentException("삭제된 콘텐츠입니다.");
 		}
 		
-		// content.increaseViewCount();
+		if (loginMember == null || !loginMember.getMemberId().equals(writerId)) {
+		    content.increaseViewCount();
+		}
 		return new ContentResponse(content);
 	}
 	
+	// 콘텐츠 수정
 	@Transactional
-	public Long updateContent(Long contentId, @Valid ContentUpdateRequest request) {
+	public Long updateContent(Long contentId, @Valid ContentUpdateRequest request, Long memberId) {
 		Content content = contentRepository.findById(contentId)
 							.orElseThrow(() -> new IllegalArgumentException("존재하지 않는 콘텐츠입니다."));
 		
@@ -83,7 +92,7 @@ public class ContentService {
 			throw new IllegalArgumentException("삭제된 콘텐츠는 수정할 수 없습니다.");
 		}
 		
-		Member member = memberRepository.findById(request.getMemberId())
+		Member member = memberRepository.findById(memberId)
 				.orElseThrow(()-> new IllegalArgumentException("존재하지 않는 회원입니다."));
 		
 		validateAuthority(content, member);
