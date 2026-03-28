@@ -56,9 +56,11 @@ public class MemberController {
 	// 로그아웃
 	@PostMapping("/logout")
 	public ResponseEntity<Void> logout(HttpServletRequest request) {
-	    HttpSession session = request.getSession(false); // 세션이 없으면 새로 만들지 마라
+		SecurityContextHolder.clearContext();
+		
+		HttpSession session = request.getSession(false);
 	    if (session != null) {
-	        session.invalidate(); // 세션 제거
+	        session.invalidate();
 	    }
 	    return ResponseEntity.ok().build();
 	}

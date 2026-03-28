@@ -3,7 +3,7 @@ package com.malgn.content.entity;
 import java.time.LocalDateTime;
 
 import com.malgn.content.enums.ContentStatus;
-import com.malgn.content.exception.ContentAccessDeniedException;
+import com.malgn.content.exception.ContentDeletedException;
 import com.malgn.member.entity.Member;
 
 import jakarta.persistence.Column;
@@ -94,7 +94,7 @@ public class Content {
     // 삭제
     public void delete(Member modifier) {
     	if(this.status == ContentStatus.DEACTIVE) {
-    		throw new ContentAccessDeniedException();
+    		throw new ContentDeletedException();
     	}
         this.status = ContentStatus.DEACTIVE;
         this.lastModifiedBy = modifier;
