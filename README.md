@@ -1,91 +1,151 @@
-# 2026 신입 Back-End 개발자 코딩 과제 - 간단한 CMS REST API
+  # CMS REST API
 
-2026년도 신입 Back-End 개발자 코딩 과제입니다.
-간단한 CMS(Contents Management System) REST API 를 구현하는 것이 목표입니다.
+  간단한 CMS(Contents Management System) REST API 프로젝트입니다.
+  콘텐츠 CRUD, 회원가입/로그인, 권한 처리, 예외 처리 기능을 구현했습니다.
 
-외부 자료 검색 및 AI 도구 사용을 허용합니다. 다만, 제출물에 활용한 도구와 방식을 간단하게 명시해주시기 바랍니다.
+  ## 기술 스택
 
-## Spec
+  - Java 25
+  - Spring Boot 4
+  - Spring Security
+  - Spring Data JPA
+  - H2 Database
+  - Gradle
+  - Lombok
 
-- Java 25
-- Spring Boot 4
-- Spring Security
-- JPA
-- H2 (db)
-- Lombok (필요시)
+  ## 실행 방법
 
-## 과제 목표
+  ### 1. 요구 사항
+  - Java 25
+  - Gradle Wrapper 사용
 
-- 간단한 CMS 콘텐츠 관리 API 를 구현 해주세요.
-- DB Schema 모두 구현해주세요.
-- DB 는 h2 를 사용해주세요.
-- 가능한 예외처리도 구현해주세요.
-- 필요하다고 생각되는 부분은 추가로 구현해도 됩니다.
+  ### 2. 프로젝트 실행
+  Windows:
+ ```powershell
+  .\gradlew.bat bootRun
+ ```
+  Mac / Linux:
+```powershell
+  ./gradlew bootRun
+```
+  ### 3. 접속 정보
 
-## 데이터 모델
+  - Base URL: http://localhost:8080
+  - H2 Console: http://localhost:8080/h2-console
 
-### Contents
+  ### 4. H2 접속 정보
 
-| 컬럼명                | 이름  | 설명          | 데이터 타입                      | 비고 |
-|--------------------|-----|-------------|-----------------------------|----|
-| id                 | 아이디 | 고유 아이디      | bigint primary key not null |    |
-| title              | 제목  | contents 제목 | varchar(100) not null       |    |
-| description        | 내용  | contents 내용 | text                        |    |
-| view_count         | 조회수 | 조회수         | bigint not null             |    |
-| created_date       | 생성일 | 생성한 날짜      | timestamp                   |    |
-| created_by         | 생성자 | 생성한 사용자     | varchar(50) not null        |    |
-| last_modified_date | 수정일 | 마지막 수정일     | timestamp                   |    |
-| last_modified_by   | 수정자 | 마지막 수정한 사용자 | varchar(50)                 |    |
+  - JDBC URL: jdbc:h2:mem:test
+  - Username: sa
+  - Password: 없음
 
-## 구현 기능
+  ## 테스트 계정
 
-### 콘텐츠 관련 CRUD
+  ### 일반 사용자
 
-시스템에 등록된 콘텐츠에 대한 CRUD 를 필수로 구현해주세요.
+  - loginId: ghkd5370
+  - password: tjdgus1005!
 
-#### 기능
-- 콘텐츠 추가
-- 콘텐츠 목록 조회
-  - 반드시 페이징 처리를 해주세요.
-- 콘텐츠 상세 조회
-- 콘텐츠 수정
-- 콘텐츠 삭제
+  ### 관리자
 
+  - loginId: admin
+  - password: admin123
 
-### 로그인
-- Spring Security 를 이용해서 로그인을 필수로 구현해주세요.
-- 로그인 방식은 자유롭게 선택하여 구현하되, `README.md` 에 명시해주세요
-- Role
-    - 관리자(ADMIN)
-    - 사용자(USER)
+  ### 일반 사용자 2
 
-### 접근 권한
+  - loginId: ghkdghkd
+  - password: tjdgus1005!
 
-- 접근 권한을 필수로 구현해주세요.
-- 콘텐츠 생성자 본인만 수정 + 삭제 가능하게 구현해주세요.
-- 단, 관리자(ADMIN) 인 경우 모든 콘텐츠에 대해 수정 + 삭제할 수 있게 구현해주세요.
+  ## 구현 내용
 
-## 제출
+  ### 회원
 
-### 기한
+  - 회원가입
+  - 로그인
+  - 로그아웃
 
-- 본 메일 수신 후 26.03.09(월) 오후 3시까지 (주)맑은기술 채용 메일(recruit@malgn.com) 로 보내주시기 바랍니다. 
+  ### 콘텐츠
 
-### 제출물
+  - 콘텐츠 생성
+  - 콘텐츠 목록 조회
+  - 콘텐츠 상세 조회
+  - 콘텐츠 수정
+  - 콘텐츠 삭제
+  - 페이징 처리
 
-- 소스코드 (Zip 또는 Github repository 링크)
-- README.md
-    - 추가 내용이나 제출물 관련 내용을 추가헤주세요.
-    - 사용한 AI 또는 참고 자료가 있다면 간단히 명시
-- REST API Docs
-    - 자유롭게 작성해서 첨부해주세요.
+  ### 권한 처리
 
+  - 로그인한 사용자만 콘텐츠 생성 가능
+  - 콘텐츠 작성자 본인만 수정/삭제 가능
+  - 관리자(ROLE_ADMIN)는 모든 콘텐츠 수정/삭제 가능
 
+  ### 예외 처리
 
+  - 존재하지 않는 콘텐츠 조회 시 예외 처리
+  - 삭제된 콘텐츠 접근 시 예외 처리
+  - 권한 없는 수정/삭제 요청 예외 처리
+  - 로그인 실패 예외 처리
+  - 회원가입 중복 아이디 예외 처리
+  - 비밀번호 확인 불일치 예외 처리
 
+  ## 추가 구현 기능
 
+  - BCrypt를 이용한 비밀번호 암호화
+  - Spring Security + SecurityContext 기반 세션 인증
+  - 콘텐츠 소프트 삭제
+  - 전역 예외 처리(@RestControllerAdvice)
+  - 조회수 증가 로직 적용
 
+  ## 인증 / 인가 방식
 
+  Spring Security를 사용했고, 로그인 성공 시 SecurityContext를 세션에 저장하는 방식으로 인증을 처리했습니다.
+  JWT는 사용하지 않았고, 과제 범위와 구현 복잡도를 고려하여 세션 기반 인증 방식을 선택했습니다.
 
+  ## 조회수 정책
 
+  - 비로그인 사용자가 콘텐츠 상세 조회 시 조회수 증가
+  - 로그인한 다른 사용자가 콘텐츠 상세 조회 시 조회수 증가
+  - 콘텐츠 작성자 본인이 상세 조회하는 경우 조회수 증가하지 않음
 
+  ## 예외 응답 형식
+
+  예외 발생 시 아래와 같은 형식으로 응답합니다.
+
+  {
+    "status": 404,
+    "message": "존재하지 않는 콘텐츠입니다."
+  }
+
+  ## REST API 문서
+
+  REST API 테스트 및 문서는 Postman 기준으로 정리했습니다.
+  제출물에 Postman 컬렉션 또는 요청 예시를 함께 포함했습니다.
+
+  ### 회원 API
+
+  - POST /members/signup : 회원가입
+  - POST /members/login : 로그인
+  - POST /members/logout : 로그아웃
+
+  ### 콘텐츠 API
+
+  - POST /contents : 콘텐츠 생성
+  - GET /contents : 콘텐츠 목록 조회
+  - GET /contents/{contentId} : 콘텐츠 상세 조회
+  - PATCH /contents/{contentId} : 콘텐츠 수정
+  - DELETE /contents/{contentId} : 콘텐츠 삭제
+
+  ## 구현하면서 고려한 사항
+
+  - 요청 DTO와 인증 사용자 정보를 분리하여, 클라이언트가 임의의 memberId를 보내지 않도록 수정했습니다.
+  - 콘텐츠 삭제는 실제 삭제 대신 상태값(DEACTIVE)을 변경하는 소프트 삭제 방식으로 처리했습니다.
+  - 콘텐츠 관련 예외와 회원 관련 예외를 분리하여 응답 코드를 일관성 있게 관리했습니다.
+
+  ## 사용한 AI 도구 / 참고 자료
+
+  - AI 도구: ChatGPT, Codex
+  - 활용 방식:
+      - Spring Security 세션 인증 구조 검토
+      - 예외 처리 구조 정리
+      - Gradle 실행 환경 문제 점검
+      - README 및 API 문서 정리 보조
