@@ -25,7 +25,7 @@
   .\gradlew.bat bootRun
  ```
   Mac / Linux:
-```powershell
+```bash
   ./gradlew bootRun
 ```
   ### 3. 접속 정보
@@ -118,8 +118,7 @@
 
   ## REST API 문서
 
-  REST API 테스트 및 문서는 Postman 기준으로 정리했습니다.
-  제출물에 Postman 컬렉션 또는 요청 예시를 함께 포함했습니다.
+  자세한 API 명세는 [API.md](./API.md)를 참고해주세요.
 
   ### 회원 API
 
