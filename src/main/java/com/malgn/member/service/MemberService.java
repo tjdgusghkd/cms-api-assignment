@@ -35,7 +35,7 @@ public class MemberService {
     }
 
     @Transactional
-    public Long signup(@Valid SignupRequest request) {
+    public Member signup(@Valid SignupRequest request) {
         if (memberRepository.existsByLoginId(request.getLoginId())) {
             throw new DuplicateLoginIdException();
         }
@@ -51,6 +51,6 @@ public class MemberService {
                 Role.ROLE_USER
         );
 
-        return memberRepository.save(member).getMemberId();
+        return memberRepository.save(member);
     }
 }
