@@ -30,7 +30,7 @@ public class ContentService {
     private final MemberRepository memberRepository;
 
     @Transactional
-    public Long createContent(@Valid ContentCreateRequest request, Long memberId) {
+    public ContentResponse createContent(@Valid ContentCreateRequest request, Long memberId) {
         Member member = memberRepository.findById(memberId)
                 .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 회원입니다."));
 
@@ -39,8 +39,9 @@ public class ContentService {
                 request.getDescription(),
                 member
         );
+        Content savedContent = contentRepository.save(content);
 
-        return contentRepository.save(content).getContentId();
+        return new ContentResponse(savedContent);
     }
 
     @Transactional
@@ -82,7 +83,7 @@ public class ContentService {
     }
 
     @Transactional
-    public Long updateContent(Long contentId, @Valid ContentUpdateRequest request, Long memberId) {
+    public ContentResponse updateContent(Long contentId, @Valid ContentUpdateRequest request, Long memberId) {
         Content content = contentRepository.findById(contentId)
                 .orElseThrow(ContentNotFoundException::new);
 
@@ -96,7 +97,7 @@ public class ContentService {
         validateAuthority(content, member);
         content.update(request.getTitle(), request.getDescription(), member);
 
-        return content.getContentId();
+        return new ContentResponse(content);
     }
 
     private void validateAuthority(Content content, Member member) {
