@@ -1,5 +1,6 @@
 package com.malgn.member.controller;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContext;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.malgn.member.dto.LoginRequest;
+import com.malgn.member.dto.SignupRequest;
 import com.malgn.member.entity.Member;
 import com.malgn.member.security.LoginMemberPrincipal;
 import com.malgn.member.service.MemberService;
@@ -26,6 +28,14 @@ import lombok.RequiredArgsConstructor;
 public class MemberController {
 	
 	private final MemberService memberService;
+	
+	// 회원가입
+	@PostMapping("/signup")
+	public ResponseEntity<Long> signup(@Valid @RequestBody SignupRequest request) {
+		Long memberId = memberService.signup(request);
+		
+		return ResponseEntity.status(HttpStatus.CREATED).body(memberId);
+	}
 	
 	// 로그인
 	@PostMapping("/login")

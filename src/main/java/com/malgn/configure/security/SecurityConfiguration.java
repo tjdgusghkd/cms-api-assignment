@@ -20,7 +20,7 @@ public class SecurityConfiguration {
 	 @Bean
 	  public SecurityFilterChain defaultSecurityFilterChain(HttpSecurity http) throws Exception {
 	      http.authorizeHttpRequests(request -> request
-	              .requestMatchers("/members/login", "/h2-console/**", "/actuator/**").permitAll()
+	              .requestMatchers("/members/login", "/h2-console/**", "/actuator/**", "/members/signup").permitAll()
 	              .requestMatchers(HttpMethod.GET, "/contents", "/contents/*").permitAll()
 	              .requestMatchers(HttpMethod.POST, "/contents").authenticated()
 	              .requestMatchers(HttpMethod.PATCH, "/contents/*").authenticated()
