@@ -12,7 +12,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.malgn.member.dto.LoginRequest;
+import com.malgn.member.dto.LoginResponse;
 import com.malgn.member.dto.SignupRequest;
+import com.malgn.member.dto.SignupResponse;
 import com.malgn.member.entity.Member;
 import com.malgn.member.security.LoginMemberPrincipal;
 import com.malgn.member.service.MemberService;
@@ -31,15 +33,22 @@ public class MemberController {
 	
 	// 회원가입
 	@PostMapping("/signup")
-	public ResponseEntity<Long> signup(@Valid @RequestBody SignupRequest request) {
-		Long memberId = memberService.signup(request);
+	public ResponseEntity<SignupResponse> signup(@Valid @RequestBody SignupRequest request) {
+		Member member = memberService.signup(request);
 		
-		return ResponseEntity.status(HttpStatus.CREATED).body(memberId);
+		SignupResponse response = new SignupResponse(
+						member.getMemberId(),
+						member.getLoginId(),
+						member.getName(),
+						member.getRole().name()					
+				);
+		
+		return ResponseEntity.status(HttpStatus.CREATED).body(response);
 	}
 	
 	// 로그인
 	@PostMapping("/login")
-	public ResponseEntity<Void> login(@Valid @RequestBody LoginRequest request, HttpSession session) {
+	public ResponseEntity<LoginResponse> login(@Valid @RequestBody LoginRequest request, HttpSession session) {
 		Member member = memberService.login(request);
 		
 		LoginMemberPrincipal principal = LoginMemberPrincipal.from	(member);
@@ -59,19 +68,21 @@ public class MemberController {
                 HttpSessionSecurityContextRepository.SPRING_SECURITY_CONTEXT_KEY,
                 context
         );
+        
+        LoginResponse response = new LoginResponse(member);
 
-        return ResponseEntity.ok().build();
+        return ResponseEntity.ok(response);
     }
 	
 	// 로그아웃
 	@PostMapping("/logout")
-	public ResponseEntity<Void> logout(HttpServletRequest request) {
+	public ResponseEntity<String> logout(HttpServletRequest request) {
 		SecurityContextHolder.clearContext();
 		
 		HttpSession session = request.getSession(false);
 	    if (session != null) {
 	        session.invalidate();
 	    }
-	    return ResponseEntity.ok().build();
+	    return ResponseEntity.ok("로그아웃 되었습니다.");
 	}
 }

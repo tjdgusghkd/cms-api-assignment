@@ -61,7 +61,7 @@ public class ContentController {
 		
 	}
 	
-	// 콘텐츠 상세 조회
+	// 콘텐츠 상세 조회 
 	@GetMapping("/{contentId}")
 	public ResponseEntity<ContentResponse> getContentDetail(@PathVariable("contentId") Long contentId) {
 		
