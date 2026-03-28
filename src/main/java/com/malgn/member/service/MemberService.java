@@ -18,16 +18,16 @@ public class MemberService {
 	private final MemberRepository memberRepository;
 	private final PasswordEncoder passwordEncoder;
 	
-	public LoginResponse login(@Valid LoginRequest request) {
-		Member member = memberRepository.findByLoginId(request.getLoginId())
-						.orElseThrow(()-> new IllegalArgumentException("아이디 또는 비밀번호가 틀렸습니다.."));
-		
-		boolean matches = passwordEncoder.matches(request.getPassword(), member.getPassword());
-		
-		if(!matches) {
-			throw new IllegalArgumentException("아이디 또는 비밀번호가 틀렸습니다..");
-		}
-		return new LoginResponse(member);
-	}
+
+	  public Member login(@Valid LoginRequest request) {
+	      Member member = memberRepository.findByLoginId(request.getLoginId())
+	              .orElseThrow(() -> new IllegalArgumentException("아이디 또는 비밀번호가 틀렸습니다."));
+
+	      if (!passwordEncoder.matches(request.getPassword(), member.getPassword())) {
+	          throw new IllegalArgumentException("아이디 또는 비밀번호가 틀렸습니다.");
+	      }
+
+	      return member;
+	  }
 
 }

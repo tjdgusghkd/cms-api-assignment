@@ -2,6 +2,7 @@ package com.malgn.configure.security;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
@@ -16,20 +17,22 @@ import lombok.RequiredArgsConstructor;
 @EnableWebSecurity
 public class SecurityConfiguration {
 
-    @Bean
-    public SecurityFilterChain defaultSecurityFilterChain(HttpSecurity http) {
+	 @Bean
+	  public SecurityFilterChain defaultSecurityFilterChain(HttpSecurity http) throws Exception {
+	      http.authorizeHttpRequests(request -> request
+	              .requestMatchers("/members/login", "/h2-console/**", "/actuator/**").permitAll()
+	              .requestMatchers(HttpMethod.GET, "/contents", "/contents/*").permitAll()
+	              .requestMatchers(HttpMethod.POST, "/contents").authenticated()
+	              .requestMatchers(HttpMethod.PATCH, "/contents/*").authenticated()
+	              .requestMatchers(HttpMethod.DELETE, "/contents/*").authenticated()
+	              .anyRequest().authenticated()
+	      );
 
-        http.authorizeHttpRequests(
-            request ->
-                request
-                .requestMatchers("/contents", "/contents/**", "/members/**").permitAll()
-                .anyRequest().authenticated());
+	      http.csrf(AbstractHttpConfigurer::disable);
+	      http.cors(AbstractHttpConfigurer::disable);
 
-        http.csrf(AbstractHttpConfigurer::disable);
-        http.cors(AbstractHttpConfigurer::disable);
-
-        return http.build();
-    }
+	      return http.build();
+	  }
     
     // BCrypt
     @Bean
