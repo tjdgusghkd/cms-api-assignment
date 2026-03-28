@@ -37,8 +37,15 @@
   ### Response
 
   - Status: 201 Created
-
-  3
+```json
+{
+    "loginId": "ghkdtjdgus",
+    "memberId": 4,
+    "name": "황성현",
+    "role": "ROLE_USER"
+}
+```
+  
 
   ### 예외
 
@@ -65,8 +72,14 @@
   ### Response
 
   - Status: 200 OK
+    ```json
+    {
+    "loginId": "ghkd5370",
+    "memberId": 1,
+    "role": "ROLE_USER"
+    }
+    ```
 
-  null
 
   ### 예외
 
@@ -84,7 +97,9 @@
   ### Response
 
   - Status: 200 OK
-
+```
+로그아웃 되었습니다.
+```
 
   ---
 
@@ -116,7 +131,7 @@
   - 401 Unauthorized : 로그인 필요
   - 400 Bad Request : 제목 누락 또는 유효성 검증 실패
 
-  ———
+  ---
 
   ## 2. 콘텐츠 목록 조회
 
