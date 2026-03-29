@@ -39,6 +39,11 @@
   - JDBC URL: jdbc:h2:mem:test
   - Username: sa
   - Password: 없음
+    
+### 5. 데이터베이스 설계(ERD)
+
+![ERD 설계도](./cms-api.png)
+
 
   ## 테스트 계정
 
@@ -136,7 +141,7 @@
   - PATCH /contents/{contentId} : 콘텐츠 수정
   - DELETE /contents/{contentId} : 콘텐츠 삭제
 
-## ✅ 검증 및 테스트 과정
+## 검증 및 테스트 과정
 
 본 프로젝트는 안정적인 서비스 제공을 위해 다음과 같은 검증 과정을 거쳤습니다. 시간 관계상 자동화된 테스트 코드(JUnit)를 포함하지는 못했으나, 도구를 활용하여 실무 수준의 케이스 검증을 완료했습니다.
 
