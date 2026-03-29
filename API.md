@@ -47,10 +47,10 @@
 ```
   ### 예외
 
-  - 409 Conflict : 이미 사용 중인 아이디
   - 400 Bad Request : 비밀번호 확인 불일치
   - 400 Bad Request : 유효성 검증 실패
   - 400 Bad Request : 요청 본문 형식 오류
+  - 409 Conflict : 이미 사용 중인 아이디
 
 ---
 
@@ -80,10 +80,10 @@
 ```
   ### 예외
 
-  - 401 Unauthorized : 아이디 또는 비밀번호 불일치
   - 400 Bad Request : 유효성 검증 실패
   - 400 Bad Request : 요청 본문 형식 오류
-
+  - 401 Unauthorized : 아이디 또는 비밀번호 불일치
+    
 ---
 
   ## 3. 로그아웃
@@ -135,10 +135,9 @@
 ```
   ### 예외
 
-  - 401 Unauthorized : 로그인 필요
   - 400 Bad Request : 제목 누락 또는 유효성 검증 실패
   - 400 Bad Request : 요청 본문 형식 오류
-
+  - 401 Unauthorized : 아이디 또는 비밀번호 불일치
 ---
 
   ## 2. 콘텐츠 목록 조회
@@ -243,12 +242,12 @@
 ```
   ### 예외
 
+  - 400 Bad Request : 유효성 검증 실패
+  - 400 Bad Request : 요청 본문 형식 오류
   - 401 Unauthorized : 로그인 필요
   - 403 Forbidden : 작성자 또는 관리자 권한 없음
   - 404 Not Found : 존재하지 않는 콘텐츠
   - 410 Gone : 삭제된 콘텐츠
-  - 400 Bad Request : 유효성 검증 실패
-  - 400 Bad Request : 요청 본문 형식 오류
 
 ---
 
