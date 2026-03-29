@@ -1,0 +1,261 @@
+{
+  "info": {
+    "_postman_id": "a87dd828-b907-4f3e-8d12-87b7d941d919",
+    "name": "cms-api-test",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "53381663",
+    "_collection_link": "https://go.postman.co/collection/53381663-a87dd828-b907-4f3e-8d12-87b7d941d919?source=collection_link"
+  },
+  "item": [
+    {
+      "name": "login",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json",
+            "type": "text"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": " {\r\n    \"loginId\": \"ghkd5370\",\r\n    \"password\": \"tjdgus1005!\"\r\n  }",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{baseUrl}}/members/login",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "members",
+            "login"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "create",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "  const response = pm.response.json();\r",
+              "  pm.collectionVariables.set(\"contentId\", response.contentId);"
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json",
+            "type": "text"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "  {\r\n    \"title\": \"테스트 글\",\r\n    \"description\": \"테스트 내용\"\r\n  }\r\n\r\n",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{baseUrl}}/contents",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "contents"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "listRead",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/contents",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "contents"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "detailRead",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/contents/{{contentId}}",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "contents",
+            "{{contentId}}"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Update",
+      "request": {
+        "method": "PATCH",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json",
+            "type": "text"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n    \"title\": \"수정\",\r\n    \"description\": \"수정후 내용.\"\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{baseUrl}}/contents/{{contentId}}",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "contents",
+            "{{contentId}}"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Delete",
+      "request": {
+        "method": "DELETE",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/contents/{{contentId}}",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "contents",
+            "{{contentId}}"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "logout",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/members/logout",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "members",
+            "logout"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "signup",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json",
+            "type": "text"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n    \"loginId\" : \"ghkdtjdgus\",\r\n    \"password\" : \"tjdgus1005!\",\r\n    \"name\" : \"황성현\",\r\n    \"passwordConfirm\" : \"tjdgus1005!\"\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{baseUrl}}/members/signup",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "members",
+            "signup"
+          ]
+        }
+      },
+      "response": []
+    }
+  ],
+  "event": [
+    {
+      "listen": "prerequest",
+      "script": {
+        "type": "text/javascript",
+        "packages": {},
+        "requests": {},
+        "exec": [
+          ""
+        ]
+      }
+    },
+    {
+      "listen": "test",
+      "script": {
+        "type": "text/javascript",
+        "packages": {},
+        "requests": {},
+        "exec": [
+          ""
+        ]
+      }
+    }
+  ],
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": ""
+    },
+    {
+      "key": "contentId",
+      "value": ""
+    }
+  ]
+}
