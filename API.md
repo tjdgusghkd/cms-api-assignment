@@ -2,8 +2,16 @@
 
   Base URL: `http://localhost:8080`
 
-  세션 기반 인증을 사용합니다.
-  로그인 성공 후 발급되는 세션(`JSESSIONID`)을 통해 인증 상태를 유지합니다.
+프로젝트 루트 폴더에 포함된 `cms-api-test.postman_collection.json` 파일을 Postman에 Import하면, 아래 명세된 모든 API를 즉시 테스트할 수 있습니다.
+
+[Postman 설정]
+- Collection Variables에서 baseUrl 값을 `http://localhost:8080`으로 설정합니다.
+
+[자동화 기능]
+- 콘텐츠 생성(create) 요청 시 응답으로 반환되는 contentId가 자동으로 변수에 저장됩니다.
+- 이를 통해 이후 상세 조회, 수정, 삭제 API를 별도 입력 없이 연속적으로 테스트할 수 있습니다.
+---
+
 
   ## 공통 응답 형식
 
