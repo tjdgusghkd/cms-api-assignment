@@ -47,9 +47,9 @@
   - Status: 201 Created
 ```json
   {
-    "loginId": "ghkdtjdgus",
-    "memberId": 4,
-    "name": "황성현",
+    "loginId": "newuser",
+    "memberId": 1,
+    "name": "홍길동",
     "role": "ROLE_USER"
   }
 ```
